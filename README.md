@@ -6,3 +6,6 @@ Recently “Machine to machine (M2M)” communicationn is an emerging technology
 Cloud through the Core Network. So accordingly we here have developed an Intelligent IoT based Automated Irrigation system where sensor data pertaining to soil moisture and temperature captured and accordingly KNN (K- Nearest Neighbor) classification machine learning algorithm deployed for analyzing the sensor data for prediction towards irrigating the soil with water.
 
 This is a fully automated where devices communicate among themselves and apply the intelligence in irrigating. This has been developed using low cost embedded devices like Arduino Uno, Raspberry Pi3. 
+
+# About Dataset
+Dataset consists of the various readings of temperature and mositure sensor taken at different times throughout the day for a period of 10 days using Arduino
