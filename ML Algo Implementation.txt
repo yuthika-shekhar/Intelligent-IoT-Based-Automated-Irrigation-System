@@ -1,0 +1,44 @@
+import csv
+import pandas as pd
+import sklearn
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.naive_bayes import GaussianNB
+
+f = open('data.csv','rU')
+data = pd.read_csv(f)
+
+#print "dry:", len(data[(data.Soil_Type == 'Dry')])
+#print "little_dry:", len(data[(data.Soil_Type == 'Little_Dry')])
+#print "little_wet:", len(data[(data.Soil_Type == 'Little_Wet')])
+#print "wet:", len(data[(data.Soil_Type == 'Wet')])
+
+numitems = len(data)
+numtrain=100;
+numtest = 1 
+#print 'Training set', numtrain, 'items'
+#print'Test set', numtest, 'items'
+
+dataTrain = data[0:numtrain]
+dataTest = data[numitems-1:numitems]
+
+# Predict temperature category from other features
+features = ['Temperature', 'Moisture']
+
+neighbors = 8
+
+classifier = KNeighborsClassifier(neighbors)
+classifier.fit(dataTrain[features], dataTrain['Soil_Type'])
+
+predictions = classifier.predict(dataTest[features])
+
+numtest = len(dataTest)
+for i in range(numtest):
+    print  predictions[i]
+    f= open("predict.txt","w+")
+    f.write(predictions[i])
+    f.close();
+    print "done"
+
+

@@ -1,0 +1,57 @@
+import csv
+import pandas as pd
+import sklearn
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.naive_bayes import GaussianNB
+
+# Read Cities.csv into dataframe, add column for temperature category
+# Note: For a dataframe D and integer i, D.ix[i] is the i-th row of D
+f = open('data.csv','rU')
+data = pd.read_csv(f)
+
+#print "dry:", len(data[(data.Soil_Type == 'Dry')])
+#print "little_dry:", len(data[(data.Soil_Type == 'Little_Dry')])
+#print "little_wet:", len(data[(data.Soil_Type == 'Little_Wet')])
+#print "wet:", len(data[(data.Soil_Type == 'Wet')])
+
+# Create training and test sets for cities data
+numitems = len(data)
+#percenttrain = 0.99
+#numtrain = int(numitems*percenttrain)
+numtrain=100;
+numtest = 1 #numitems - numtrain
+#print 'Training set', numtrain, 'items'
+#print'Test set', numtest, 'items'
+
+dataTrain = data[0:numtrain]
+dataTest = data[numitems-1:numitems]
+
+# Predict temperature category from other features
+features = ['Temperature', 'Moisture']
+#features = [32,45]
+
+neighbors = 8
+
+classifier = KNeighborsClassifier(neighbors)
+classifier.fit(dataTrain[features], dataTrain['Soil_Type'])
+#predictions = classifier.predict(features)
+
+predictions = classifier.predict(dataTest[features])
+
+# Calculate accuracy
+#numtrain = len(dataTrain)
+numtest = len(dataTest)
+#correct = 0
+for i in range(numtest):
+    print  predictions[i]
+    f= open("predict.txt","w+")
+    f.write(predictions[i])
+    f.close();
+    print "done"
+    #' Actual:', dataTest.ix[numtrain+i]['Soil_Type']
+
+#    if predictions[i] == dataTest.ix[numtrain+i]['Soil_Type']: correct +=1
+#print 'Percent correct:', float(correct)/float(numtest)
+
